@@ -1,17 +1,21 @@
 import streamlit as st
 import numpy as np
-from sklearn.linear_model import LinearRegression
+from model import train
 
+# Title
 st.title("Hello World AI App")
+st.subheader("A simple regression model")
 
-# Simple training data: y = 2x + 1
-X = np.array([[1], [2], [3], [4], [5]])
-y = np.array([3, 5, 7, 9, 11])
+# Train model
+model = train()
 
-model = LinearRegression()
-model.fit(X, y)
+# Sidebar
+st.sidebar.header("Input features")
+input_value = st.sidebar.slider("Select value of x", 1, 10, 5)
 
-value = st.slider("Pick a value", 0, 20, 5)
-prediction = model.predict([[value]])[0]
+# Prediction
+input_array = np.array([[input_value]])
+prediction = model.predict(input_array)
 
-st.write(f"Predicted output: **{prediction:.2f}**")
+st.write(f"Input value : {input_value}")
+st.write(f"Output value: {prediction[0]:.2f}")
